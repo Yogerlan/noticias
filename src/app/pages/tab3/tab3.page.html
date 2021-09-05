@@ -1,0 +1,16 @@
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-title>
+      Favorites
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark" [fullscreen]="true">
+  <ion-slides [options]="slidesOptions" *ngIf="localDataService.articles.length === 0">
+    <ion-slide>
+      <ion-label>No Favorites</ion-label>
+    </ion-slide>
+  </ion-slides>
+  <app-news [articles]="localDataService.articles" [onFavorites]="true"></app-news>
+</ion-content>

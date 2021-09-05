@@ -1,0 +1,15 @@
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-title>
+      Ledesma's News
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark" [fullscreen]="true">
+  <app-news [articles]="articles"></app-news>
+  <ion-infinite-scroll threshold="150px" position="bottom" (ionInfinite)="loadArticlesPage( $event )">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading news...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
