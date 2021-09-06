@@ -23,6 +23,19 @@ export class Tab1Page implements OnInit {
   }
 
   loadArticles( event? ) {
+    // this.news.getTopHeadlines().then( resp => {
+    //   // console.log('Noticias', resp);
+    //   if (resp.articles.length === 0) {
+    //     if (event) {
+    //       event.target.disabled = true;
+    //     }
+    //   } else {
+    //     this.articles.push(...resp.articles);
+    //   }
+    //   if (event) {
+    //     event.target.complete();
+    //   }
+    // });
     this.news.getTopHeadlines()
       .subscribe( resp => {
         // console.log('Noticias', resp);

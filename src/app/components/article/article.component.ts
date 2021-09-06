@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
@@ -15,20 +15,42 @@ import { LocalDataService } from 'src/app/services/local-data.service';
 export class ArticleComponent implements OnInit {
 
   @Input() article: Article = null;
-  @Input() index: Number = 0;
-  @Input() onFavorites: Boolean;
+  @Input() index: number = 0;
+  @Input() onFavorites: boolean;
 
   constructor(
     private iab: InAppBrowser,
     private socialSharing: SocialSharing,
     private actionSheetController: ActionSheetController,
-    private localDataService: LocalDataService
+    private localDataService: LocalDataService,
+    private platform: Platform
   ) { }
 
   ngOnInit() {}
 
   openArticle() {
     const browser = this.iab.create(this.article.url, '_system');
+  }
+
+  shareArticle() {
+    if (this.platform.is('cordova')) {
+      this.socialSharing.share(
+        this.article.title,
+        this.article.source.name,
+        '',
+        this.article.url
+      );
+    } else {
+      if (navigator.share) {
+        navigator.share({
+          title: this.article.title,
+          text: this.article.description,
+          url: this.article.url
+        });
+      } else {
+        console.log('Unsupported feature!');
+      }
+    }
   }
 
   async showMenu() {
@@ -58,12 +80,7 @@ export class ArticleComponent implements OnInit {
           cssClass: 'action-dark',
           handler: () => {
             // console.log('Share clicked!');
-            this.socialSharing.share(
-              this.article.title,
-              this.article.source.name,
-              '',
-              this.article.url
-            )
+            this.shareArticle();
           }
         }, favoriteButton, {
           text: 'Cancel',

@@ -36,6 +36,19 @@ export class Tab2Page implements OnInit, AfterViewInit {
   }
 
   loadCategoryArticles( category: string, event? ) {
+    // this.news.getTopHeadlinesCategory(category).then( resp => {
+    //   // console.log('Noticias', resp);
+    //   if (resp.articles.length === 0) {
+    //     if (event) {
+    //       event.target.disabled = true;
+    //     }
+    //   } else {
+    //     this.articles.push(...resp.articles);
+    //   }
+    //   if (event) {
+    //     event.target.complete();
+    //   }
+    // });
     this.news.getTopHeadlinesCategory(category)
       .subscribe( resp => {
         // console.log('Noticias', resp);
